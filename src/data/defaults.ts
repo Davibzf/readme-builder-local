@@ -36,6 +36,7 @@ export const DEFAULT_STATE: AppState = {
     bio: 'Construindo o futuro, um commit por vez.',
     location: '',
     focus: 'backend',
+    pronouns: '',
     website: '',
     openToWork: false,
   },

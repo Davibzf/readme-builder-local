@@ -46,7 +46,10 @@ export default function PluginsSection({ state, togglePlugin, setPluginField }: 
         const plug = state.plugins[pm.id]
         const on   = plug?.enabled ?? false
         const desc = state.lang === 'en' ? pm.descEn : pm.descPt
+<<<<<<< HEAD
         const fields = getPluginFields(pm.id, pm.fields)
+=======
+>>>>>>> parent of 7955c93 (implantaçao do github stast)
         return (
           <div key={pm.id} className={`plugin-card${on?' active':''}`}>
             <div className="plugin-header">
@@ -61,7 +64,7 @@ export default function PluginsSection({ state, togglePlugin, setPluginField }: 
                 <span className="knob" />
               </button>
             </div>
-            {on && fields?.map(f => (
+            {on && pm.fields?.map(f => (
               <div key={f.key} className="plugin-field">
                 <input className="field-input" placeholder={tr(f.labelKey)}
                   value={plug?.fields[f.key] ?? ''}

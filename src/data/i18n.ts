@@ -22,6 +22,7 @@ const PT: Dict = {
   lbl_name:      'Nome / Título',
   lbl_bio:       'Bio',
   lbl_location:  'Localização',
+  lbl_pronouns:  'Pronomes',
   lbl_focus:     'Foco principal',
   lbl_website:   'Site / Portfolio',
   lbl_openwork:  'Aberto a oportunidades',
@@ -99,7 +100,6 @@ const PT: Dict = {
   toast_reset:    'Configuração resetada.',
   toast_svg_ok:   'SVG copiado!',
   toast_applied:  'Template aplicado!',
-  toast_github_sync_error: 'Erro ao buscar dados do GitHub.',
 
   // Plugins
   plugin_snake:   'Snake Game',
@@ -161,6 +161,7 @@ const EN: Dict = {
   lbl_name:      'Name / Title',
   lbl_bio:       'Bio',
   lbl_location:  'Location',
+  lbl_pronouns:  'Pronouns',
   lbl_focus:     'Main focus',
   lbl_website:   'Website / Portfolio',
   lbl_openwork:  'Open to work',
@@ -230,7 +231,6 @@ const EN: Dict = {
   toast_reset:    'Configuration reset.',
   toast_svg_ok:   'SVG copied!',
   toast_applied:  'Template applied!',
-  toast_github_sync_error: 'Error fetching GitHub data.',
 
   plugin_snake:   'Snake Game',
   plugin_stats:   'GitHub Stats',

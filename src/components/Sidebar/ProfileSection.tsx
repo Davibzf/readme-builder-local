@@ -48,6 +48,11 @@ export default function ProfileSection({ state, setProfile, setStatsTheme }: Pro
           onChange={e => setProfile({ location: e.target.value })} placeholder="Brasil 🇧🇷" />
       </div>
       <div className="field-group">
+        <label className="field-label">{tr('lbl_pronouns')}</label>
+        <input className="field-input" value={profile.pronouns}
+          onChange={e => setProfile({ pronouns: e.target.value })} placeholder="ele/dele" />
+      </div>
+      <div className="field-group">
         <label className="field-label">{tr('lbl_focus')}</label>
         <select className="field-input" value={profile.focus}
           onChange={e => setProfile({ focus: e.target.value as FocusKey })}>

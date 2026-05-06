@@ -1,8 +1,12 @@
 import React, { useMemo } from 'react'
 import type { AppState } from '../../types'
+<<<<<<< HEAD
 import { generateTypingSVG, generateVisitorBadgeSVG, generateWaveSVG } from '../../generators/typing-svg'
 import { generateGithubStatsCard, generateGithubStreakCard, generateTopLangsCard, svgToDataURI } from '../../generators/github-stats'
 import { generateSnakePreviewSVG } from '../../generators/snake-game'
+=======
+import { generateTypingSVG } from '../../generators/typing-svg'
+>>>>>>> parent of 7955c93 (implantaçao do github stast)
 import { getFontById } from '../../data/fonts'
 import { t } from '../../data/i18n'
 
@@ -21,6 +25,7 @@ export default function Preview({ state }: Props) {
 
   const iconAlign = icons.align === 'left' ? 'left' : 'center'
   const iconRows = useMemo(() => chunkIcons(icons.selected, getSafePerRow(icons.perRow)), [icons.selected, icons.perRow])
+<<<<<<< HEAD
   const localStats = useMemo(() => ({
     stats: generateGithubStatsCard(state),
     streak: generateGithubStreakCard(state),
@@ -43,6 +48,8 @@ export default function Preview({ state }: Props) {
     () => generateWaveSVG('footer', waveColor, 86, waveFooterText),
     [waveColor, waveFooterText],
   )
+=======
+>>>>>>> parent of 7955c93 (implantaçao do github stast)
 
   const user = profile.username || 'seu-username'
   const focus = getFocusLabelLocal(profile.focus, lang)
@@ -115,9 +122,9 @@ export default function Preview({ state }: Props) {
           <>
             <h2 className="rm-h2">{tr('rm_stats')}</h2>
             <div className="rm-stats-row">
-              {plugins['stats']?.enabled   && <img src={svgToDataURI(localStats.stats)} alt="stats" className="stat-img local-stat-img" />}
-              {plugins['streak']?.enabled  && <img src={svgToDataURI(localStats.streak)} alt="streak" className="stat-img local-stat-img" />}
-              {plugins['langs']?.enabled   && <img src={svgToDataURI(localStats.langs)} alt="langs" className="stat-img local-stat-img" />}
+              {plugins['stats']?.enabled   && <img src={`https://github-readme-stats.vercel.app/api?username=${user}&show_icons=true&theme=${statsTheme}&hide_border=true`} alt="stats" className="stat-img" />}
+              {plugins['streak']?.enabled  && <img src={`https://streak-stats.demolab.com?user=${user}&theme=${statsTheme}&hide_border=true`} alt="streak" className="stat-img" />}
+              {plugins['langs']?.enabled   && <img src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${user}&theme=${statsTheme}&hide_border=true&layout=compact`} alt="langs" className="stat-img" />}
             </div>
           </>
         )}
@@ -181,7 +188,7 @@ export default function Preview({ state }: Props) {
         )}
 
         <hr className="rm-hr" />
-        <p style={{ textAlign:'center', fontSize:12, opacity:.5 }}>⚡ README Builder V2 - Davibzf ⚡</p>
+        <p style={{ textAlign:'center', fontSize:12, opacity:.5 }}>⚡ README Builder v2.0 — 100% local</p>
       </div>
     </div>
   )
