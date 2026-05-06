@@ -46,10 +46,7 @@ export default function PluginsSection({ state, togglePlugin, setPluginField }: 
         const plug = state.plugins[pm.id]
         const on   = plug?.enabled ?? false
         const desc = state.lang === 'en' ? pm.descEn : pm.descPt
-<<<<<<< HEAD
         const fields = getPluginFields(pm.id, pm.fields)
-=======
->>>>>>> parent of 7955c93 (implantaçao do github stast)
         return (
           <div key={pm.id} className={`plugin-card${on?' active':''}`}>
             <div className="plugin-header">

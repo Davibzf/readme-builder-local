@@ -232,14 +232,11 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px;
 .rm-icons.left .rm-icons-row { justify-content: flex-start; }
 .rm-stats-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; margin: 8px 0; }
 .stat-img { border-radius: 8px; height: 160px; max-width: 100%; }
-<<<<<<< HEAD
 .local-stat-img { width: min(100%, 500px); height: auto; }
 .visitor-badge-preview { display: flex; justify-content: center; margin: 8px 0; }
 .visitor-badge-preview img { height: 24px; width: auto; image-rendering: auto; }
 .snake-preview { display: flex; justify-content: center; margin: 8px 0 0; overflow: hidden; }
 .snake-preview svg { width: 100%; max-width: 760px; height: auto; display: block; border-radius: 10px; }
-=======
->>>>>>> parent of 7955c93 (implantaçao do github stast)
 .typing-wrap { display: flex; justify-content: center; margin: 10px 0; }
 .social-badges { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 12px 0; }
 .social-badge { display: inline-block; padding: 5px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; color: #fff; letter-spacing: .5px; }

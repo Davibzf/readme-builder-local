@@ -159,6 +159,17 @@ function shorten(value: string, max: number): string {
   return value.length > max ? `${value.slice(0, max - 1)}...` : value
 }
 
+export function getServiceHeading(id: ServiceId, tr: (key: string) => string): string {
+  const headings: Record<ServiceId, string> = {
+    wakatime: '⏱ ' + tr('rm_wakatime'),
+    spotify: '🎵 ' + tr('rm_spotify'),
+    leetcode: '💡 ' + tr('rm_leetcode'),
+    codewars: '⚔️ ' + tr('rm_codewars'),
+    hackerrank: '🏆 ' + tr('rm_hackerrank'),
+  }
+  return headings[id] || id
+}
+
 function esc(value: string): string {
   return value
     .replace(/&/g, '&amp;')

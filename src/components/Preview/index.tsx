@@ -1,12 +1,8 @@
 import React, { useMemo } from 'react'
 import type { AppState } from '../../types'
-<<<<<<< HEAD
 import { generateTypingSVG, generateVisitorBadgeSVG, generateWaveSVG } from '../../generators/typing-svg'
 import { generateGithubStatsCard, generateGithubStreakCard, generateTopLangsCard, svgToDataURI } from '../../generators/github-stats'
 import { generateSnakePreviewSVG } from '../../generators/snake-game'
-=======
-import { generateTypingSVG } from '../../generators/typing-svg'
->>>>>>> parent of 7955c93 (implantaçao do github stast)
 import { getFontById } from '../../data/fonts'
 import { t } from '../../data/i18n'
 
@@ -25,7 +21,6 @@ export default function Preview({ state }: Props) {
 
   const iconAlign = icons.align === 'left' ? 'left' : 'center'
   const iconRows = useMemo(() => chunkIcons(icons.selected, getSafePerRow(icons.perRow)), [icons.selected, icons.perRow])
-<<<<<<< HEAD
   const localStats = useMemo(() => ({
     stats: generateGithubStatsCard(state),
     streak: generateGithubStreakCard(state),
@@ -48,8 +43,6 @@ export default function Preview({ state }: Props) {
     () => generateWaveSVG('footer', waveColor, 86, waveFooterText),
     [waveColor, waveFooterText],
   )
-=======
->>>>>>> parent of 7955c93 (implantaçao do github stast)
 
   const user = profile.username || 'seu-username'
   const focus = getFocusLabelLocal(profile.focus, lang)
