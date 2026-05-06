@@ -15,7 +15,6 @@ export interface Profile {
   bio: string
   location: string
   focus: FocusKey
-  pronouns: string
   website: string
   openToWork: boolean
 }

@@ -228,6 +228,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px;
 .rm-icons.left .rm-icons-row { justify-content: flex-start; }
 .rm-stats-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; margin: 8px 0; }
 .stat-img { border-radius: 8px; height: 160px; max-width: 100%; }
+.local-stat-img { width: min(100%, 520px); height: auto; }
 .typing-wrap { display: flex; justify-content: center; margin: 10px 0; }
 .social-badges { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 12px 0; }
 .social-badge { display: inline-block; padding: 5px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; color: #fff; letter-spacing: .5px; }
