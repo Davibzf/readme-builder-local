@@ -4,7 +4,6 @@
 
 export type Lang = 'pt' | 'en'
 export type PreviewTheme = 'light' | 'dark'
-export type TypingMode = 'local' | 'external'
 export type IconAlign = 'left' | 'center'
 export type BadgeStyle = 'flat' | 'flat-square' | 'for-the-badge' | 'plastic'
 export type View = 'preview' | 'markdown'
@@ -27,7 +26,7 @@ export type FocusKey =
 
 // ── TYPING SVG ────────────────────────────────────────────────
 export interface TypingConfig {
-  mode: TypingMode
+  mode: 'local'
   texts: string[]          // up to 10
   color: string            // hex without #
   speed: number            // ms per char

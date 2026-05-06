@@ -14,7 +14,6 @@ export default function Preview({ state }: Props) {
   const typingSvg = useMemo(() => {
     const lines = typing.texts.filter(s => s.trim())
     if (!lines.length) return ''
-    if (typing.mode !== 'local') return ''
     return generateTypingSVG({ ...typing, texts: lines })
   }, [typing])
 
@@ -44,11 +43,8 @@ export default function Preview({ state }: Props) {
           {profile.openToWork && <span className="open-badge">Open to work ✓</span>}
 
           {/* Typing SVG */}
-          {typing.mode === 'local' && typingSvg && (
+          {typingSvg && (
             <div className="typing-wrap" dangerouslySetInnerHTML={{ __html: typingSvg }} />
-          )}
-          {typing.mode === 'external' && (
-            <img src={buildExternalTypingUrl(typing)} alt="Typing SVG" style={{ maxWidth: '100%', margin: '8px 0' }} />
           )}
 
           {/* Social badges */}
@@ -190,10 +186,4 @@ function getFocusLabelLocal(focus: string, lang: string): string {
   }
   const e = map[focus]
   return e ? (lang === 'en' ? e.en : e.pt) : focus
-}
-
-function buildExternalTypingUrl(typing: AppState['typing']): string {
-  const texts = typing.texts.filter(s => s.trim()).map(encodeURIComponent).join(';')
-  if (!texts) return ''
-  return `https://readme-typing-svg.demolab.com?font=${typing.font}&size=${typing.fontSize}&duration=3500&pause=${typing.pause}&color=${typing.color}&center=true&vCenter=true&width=${typing.width}&lines=${texts}`
 }

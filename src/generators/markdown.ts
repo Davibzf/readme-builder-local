@@ -28,17 +28,10 @@ export function generateMarkdown(state: AppState): string {
 
   let typingMd = ''
   if (lines.length) {
-    if (typing.mode === 'local') {
-      // Embed the SVG as a data URI so it works without any hosting
-      const svg = generateTypingSVG({ ...typingConfig, texts: lines })
-      const encoded = svgToDataURI(svg)
-      typingMd = `<img src="${encoded}" alt="Typing SVG" />`
-    } else {
-      // External: only fallback for users who want it
-      const texts = lines.map(encodeURIComponent).join(';')
-      const url = `https://readme-typing-svg.demolab.com?font=${typing.font}&size=${typing.fontSize}&duration=3500&pause=${typing.pause}&color=${typing.color}&center=true&vCenter=true&width=${typing.width}&lines=${texts}`
-      typingMd = `[![Typing SVG](${url})](https://git.io/typing-svg)`
-    }
+    // Embed the SVG as a data URI so it works without any hosting
+    const svg = generateTypingSVG({ ...typingConfig, texts: lines })
+    const encoded = svgToDataURI(svg)
+    typingMd = `<img src="${encoded}" alt="Typing SVG" />`
   }
 
   // Icons markdown: inline SVG data URIs (fully offline)

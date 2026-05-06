@@ -21,7 +21,7 @@ function loadState(): AppState {
     // Ensure 10 typing texts
     while (merged.typing.texts.length < 10) merged.typing.texts.push('')
     merged.typing.texts = merged.typing.texts.slice(0, 10)
-    return merged
+    return normalizeState(merged)
   } catch {
     return structuredClone(DEFAULT_STATE)
   }
@@ -40,6 +40,20 @@ function deepMerge(target: unknown, source: unknown): unknown {
     return out
   }
   return source ?? target
+}
+
+function normalizeState(state: AppState): AppState {
+  const active = state.icons.activeCategories
+  return {
+    ...state,
+    typing: { ...state.typing, mode: 'local' },
+    icons: {
+      ...state.icons,
+      activeCategories: active.length
+        ? [active[0]]
+        : [...DEFAULT_STATE.icons.activeCategories],
+    },
+  }
 }
 
 export function useAppState() {
@@ -102,11 +116,7 @@ export function useAppState() {
   )
   const toggleCategory = useCallback((cat: CategoryKey) =>
     setState(s => {
-      const cats = s.icons.activeCategories
-      const next = cats.includes(cat)
-        ? cats.length > 1 ? cats.filter(c => c !== cat) : cats
-        : [...cats, cat]
-      return { ...s, icons: { ...s.icons, activeCategories: next } }
+      return { ...s, icons: { ...s.icons, activeCategories: [cat] } }
     }), [setState]
   )
 
@@ -207,7 +217,7 @@ export function useAppState() {
 
   // Template apply
   const applyTemplate = useCallback((partial: Partial<AppState>) =>
-    setState(s => deepMerge(s, partial) as AppState), [setState]
+    setState(s => normalizeState(deepMerge(s, partial) as AppState)), [setState]
   )
 
   // Reset
@@ -232,7 +242,7 @@ export function useAppState() {
       reader.onload = e => {
         try {
           const parsed = JSON.parse(e.target?.result as string)
-          const merged = deepMerge(DEFAULT_STATE, parsed) as AppState
+          const merged = normalizeState(deepMerge(DEFAULT_STATE, parsed) as AppState)
           localStorage.setItem(STORAGE_KEY, JSON.stringify(merged))
           setStateRaw(merged)
           resolve()

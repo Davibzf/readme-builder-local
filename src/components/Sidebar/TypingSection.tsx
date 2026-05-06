@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import type { AppState } from '../../types'
 import { t } from '../../data/i18n'
 import { FONTS } from '../../data/fonts'
@@ -47,17 +47,6 @@ export default function TypingSection({ state, setTyping, setTypingText, onToast
 
   return (
     <div className="sec-body">
-      {/* Mode toggle */}
-      <div className="field-group">
-        <label className="field-label">{tr('lbl_mode')}</label>
-        <div className="seg-group w-full">
-          <button className={`seg-btn${typing.mode==='local'?' active':''}`}
-            onClick={() => setTyping({ mode: 'local' })}>{tr('mode_local')}</button>
-          <button className={`seg-btn${typing.mode==='external'?' active':''}`}
-            onClick={() => setTyping({ mode: 'external' })}>{tr('mode_external')}</button>
-        </div>
-      </div>
-
       {/* SVG preview */}
       {svgPreview && (
         <div className="field-group">
@@ -66,8 +55,8 @@ export default function TypingSection({ state, setTyping, setTypingText, onToast
         </div>
       )}
 
-      {/* SVG actions (local mode) */}
-      {typing.mode === 'local' && (
+      {/* SVG actions */}
+      {svgPreview && (
         <div className="field-group svg-actions">
           <button className="svg-btn" onClick={() => downloadSVG(svgPreview, 'typing.svg')}>
             ⬇ {tr('btn_dl_svg')}

@@ -36,9 +36,6 @@ const PT: Dict = {
   lbl_fontsize:  'Tamanho (px)',
   lbl_width:     'Largura (px)',
   lbl_align:     'Alinhamento',
-  lbl_mode:      'Modo',
-  mode_local:    'Local (SVG gerado)',
-  mode_external: 'Externo (demolab.com)',
   ph_typing:     'Ex: Backend Developer 🚀',
 
   // Icons
@@ -158,9 +155,6 @@ const EN: Dict = {
   lbl_fontsize:  'Size (px)',
   lbl_width:     'Width (px)',
   lbl_align:     'Align',
-  lbl_mode:      'Mode',
-  mode_local:    'Local (generated SVG)',
-  mode_external: 'External (demolab.com)',
   ph_typing:     'E.g. Backend Developer 🚀',
 
   lbl_source:    'Source',
