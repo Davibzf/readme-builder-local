@@ -220,7 +220,12 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px;
 .rm-hr { border: none; margin: 20px 0; }
 .rm-light .rm-hr { border-top: 1px solid #d0d7de; }
 .rm-dark  .rm-hr { border-top: 1px solid #30363d; }
-.rm-icons { display: flex; flex-wrap: wrap; gap: 4px; }
+.rm-icons { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.rm-icons.center { align-items: center; }
+.rm-icons.left { align-items: flex-start; }
+.rm-icons-row { display: flex; flex-wrap: wrap; gap: 6px; max-width: 100%; }
+.rm-icons.center .rm-icons-row { justify-content: center; }
+.rm-icons.left .rm-icons-row { justify-content: flex-start; }
 .rm-stats-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; margin: 8px 0; }
 .stat-img { border-radius: 8px; height: 160px; max-width: 100%; }
 .typing-wrap { display: flex; justify-content: center; margin: 10px 0; }

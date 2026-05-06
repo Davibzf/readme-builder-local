@@ -56,9 +56,9 @@ export const DEFAULT_STATE: AppState = {
   },
 
   icons: {
-    source: 'local',
     selected: [],
     perRow: 12,
+    align: 'center',
     search: '',
     activeCategories: ['backend'],
   },

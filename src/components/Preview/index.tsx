@@ -18,11 +18,8 @@ export default function Preview({ state }: Props) {
     return generateTypingSVG({ ...typing, texts: lines })
   }, [typing])
 
-  const iconImgs = icons.selected.map(id => (
-    <img key={id} src={`assets/icons/${id}.svg`} width={40} alt={id} title={id}
-      style={{ margin: 3 }}
-      onError={e => { (e.currentTarget as HTMLImageElement).src = `https://skillicons.dev/icons?i=${id}&theme=dark` }} />
-  ))
+  const iconAlign = icons.align === 'left' ? 'left' : 'center'
+  const iconRows = useMemo(() => chunkIcons(icons.selected, getSafePerRow(icons.perRow)), [icons.selected, icons.perRow])
 
   const user = profile.username || 'seu-username'
   const focus = getFocusLabelLocal(profile.focus, lang)
@@ -83,7 +80,15 @@ export default function Preview({ state }: Props) {
         {icons.selected.length > 0 && (
           <>
             <h2 className="rm-h2">{tr('rm_stack')}</h2>
-            <div className="rm-icons">{iconImgs}</div>
+            <div className={`rm-icons ${iconAlign}`}>
+              {iconRows.map((row, rowIndex) => (
+                <div key={rowIndex} className="rm-icons-row">
+                  {row.map(id => (
+                    <img key={id} src={`assets/icons/${id}.svg`} width={40} alt={id} title={id} />
+                  ))}
+                </div>
+              ))}
+            </div>
           </>
         )}
 
@@ -149,6 +154,18 @@ export default function Preview({ state }: Props) {
       </div>
     </div>
   )
+}
+
+function getSafePerRow(value: number): number {
+  return Number.isFinite(value) ? Math.min(20, Math.max(1, value)) : 12
+}
+
+function chunkIcons(ids: string[], perRow: number): string[][] {
+  const rows: string[][] = []
+  for (let i = 0; i < ids.length; i += perRow) {
+    rows.push(ids.slice(i, i + perRow))
+  }
+  return rows
 }
 
 function SocialBadge({ label, color }: { label: string; color: string }) {

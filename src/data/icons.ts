@@ -162,9 +162,8 @@ export function searchIcons(query: string): IconDef[] {
 }
 
 // Returns the path to use in <img src> for preview
-export function getIconPreviewSrc(id: string, source: 'local' | 'external'): string {
-  if (source === 'local') return `assets/icons/${id}.svg`
-  return `assets/icons/${id}.svg` // always local in offline-first mode
+export function getIconPreviewSrc(id: string): string {
+  return `assets/icons/${id}.svg`
 }
 
 // Returns the path to embed in the generated Markdown

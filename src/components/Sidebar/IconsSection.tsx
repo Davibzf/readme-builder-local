@@ -13,6 +13,10 @@ interface Props {
 export default function IconsSection({ state, setIcons, toggleIcon, toggleCategory }: Props) {
   const tr = (k: string) => t(state.lang, k)
   const { icons } = state
+  const align = icons.align === 'left' ? 'left' : 'center'
+  const perRow = Number.isFinite(icons.perRow)
+    ? Math.min(20, Math.max(1, icons.perRow))
+    : 12
 
   const visible = useMemo(() => {
     if (icons.search.trim()) return searchIcons(icons.search)
@@ -27,21 +31,6 @@ export default function IconsSection({ state, setIcons, toggleIcon, toggleCatego
 
   return (
     <div className="sec-body">
-      {/* Source toggle */}
-      <div className="field-group">
-        <label className="field-label">{tr('lbl_source')}</label>
-        <div className="seg-group w-full">
-          <button className={`seg-btn${icons.source==='local'?' active':''}`}
-            onClick={() => setIcons({ source: 'local' })}>
-            Local (assets/icons/)
-          </button>
-          <button className={`seg-btn${icons.source==='external'?' active':''}`}
-            onClick={() => setIcons({ source: 'external' })}>
-            CDN (skillicons.dev)
-          </button>
-        </div>
-      </div>
-
       {/* Category pills */}
       <div className="cat-pills">
         {(Object.keys(ICON_CATEGORIES) as CategoryKey[]).map(cat => {
@@ -98,8 +87,22 @@ export default function IconsSection({ state, setIcons, toggleIcon, toggleCatego
 
       {/* Per row */}
       <div className="field-group">
-        <label className="field-label">{tr('lbl_perrow')}: <strong>{icons.perRow}</strong></label>
-        <input type="range" min={1} max={20} value={icons.perRow}
+        <label className="field-label">{tr('lbl_align')}</label>
+        <div className="seg-group w-full">
+          <button className={`seg-btn${align==='left'?' active':''}`}
+            onClick={() => setIcons({ align: 'left' })}>
+            Left
+          </button>
+          <button className={`seg-btn${align==='center'?' active':''}`}
+            onClick={() => setIcons({ align: 'center' })}>
+            Center
+          </button>
+        </div>
+      </div>
+
+      <div className="field-group">
+        <label className="field-label">{tr('lbl_perrow')}: <strong>{perRow}</strong></label>
+        <input type="range" min={1} max={20} value={perRow}
           onChange={e => setIcons({ perRow: +e.target.value })} />
       </div>
     </div>

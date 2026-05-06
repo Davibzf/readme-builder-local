@@ -5,7 +5,7 @@
 export type Lang = 'pt' | 'en'
 export type PreviewTheme = 'light' | 'dark'
 export type TypingMode = 'local' | 'external'
-export type IconSource = 'local' | 'external'
+export type IconAlign = 'left' | 'center'
 export type BadgeStyle = 'flat' | 'flat-square' | 'for-the-badge' | 'plastic'
 export type View = 'preview' | 'markdown'
 
@@ -54,9 +54,9 @@ export type CategoryKey =
   | 'gamedev' | 'testing'
 
 export interface IconsConfig {
-  source: IconSource
   selected: string[]
   perRow: number
+  align: IconAlign
   search: string
   activeCategories: CategoryKey[]
 }

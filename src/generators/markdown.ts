@@ -114,7 +114,7 @@ function buildSection(
 
     case 'icons': {
       if (!iconsMd) return ''
-      return `## ${tr('rm_stack')}\n\n<div align="center">\n\n${iconsMd}\n\n</div>`
+      return `## ${tr('rm_stack')}\n\n${iconsMd}`
     }
 
     case 'stats': {
@@ -205,19 +205,25 @@ function buildIconsMarkdown(state: AppState): string {
   const { icons } = state
   if (!icons.selected.length) return ''
 
-  // Embed each icon as a data URI from local assets
-  // This makes the README work without any CDN
-  const perRow = icons.perRow || 12
+  // Use only local assets and force row breaks so "icons per row" is respected.
+  const perRow = getSafePerRow(icons.perRow)
+  const align = icons.align === 'left' ? 'left' : 'center'
   const rows: string[][] = []
   for (let i = 0; i < icons.selected.length; i += perRow) {
     rows.push(icons.selected.slice(i, i + perRow))
   }
 
-  return rows.map(row => {
-    return row.map(id =>
+  const rowsMd = rows.map(row =>
+    row.map(id =>
       `<img src="./assets/icons/${id}.svg" width="40" alt="${id}" title="${id}" />`
     ).join(' ')
-  }).join('\n')
+  ).join('\n<br />\n')
+
+  return `<div align="${align}">\n\n${rowsMd}\n\n</div>`
+}
+
+function getSafePerRow(value: number): number {
+  return Number.isFinite(value) ? Math.min(20, Math.max(1, value)) : 12
 }
 
 // ── SOCIAL BADGES ─────────────────────────────────────────────
