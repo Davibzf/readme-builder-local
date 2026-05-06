@@ -6,27 +6,6 @@ import type { AppState, PinnedProject } from '../types'
 
 type LangItem = { label: string; value: number; color: string }
 
-type GithubRepo = {
-  full_name: string
-  fork: boolean
-  language: string | null
-  languages_url: string
-  size: number
-  stargazers_count: number
-}
-
-type GithubEvent = {
-  type: string
-  created_at: string
-  payload?: { commits?: unknown[] }
-}
-
-export type GithubStatsSnapshot = {
-  stats: Record<string, string>
-  streak: Record<string, string>
-  languages: LangItem[]
-}
-
 const THEME_COLORS: Record<string, {
   bg: string
   panel: string
@@ -196,41 +175,6 @@ export function generateTopLangsCard(state: AppState): string {
   `)
 }
 
-export async function fetchGithubStatsSnapshot(username: string): Promise<GithubStatsSnapshot> {
-  const user = username.trim()
-  if (!user) throw new Error('GitHub username is required')
-
-  const [profile, repos, prs, issues, commits, events] = await Promise.all([
-    fetchJson<{ public_repos: number }>(`https://api.github.com/users/${encodeURIComponent(user)}`),
-    fetchAllPages<GithubRepo>(`https://api.github.com/users/${encodeURIComponent(user)}/repos?type=owner&sort=updated&per_page=100`, 3),
-    safeSearchCount(`https://api.github.com/search/issues?q=author:${encodeURIComponent(user)}+type:pr`),
-    safeSearchCount(`https://api.github.com/search/issues?q=author:${encodeURIComponent(user)}+type:issue`),
-    safeSearchCount(`https://api.github.com/search/commits?q=author:${encodeURIComponent(user)}`),
-    fetchJson<GithubEvent[]>(`https://api.github.com/users/${encodeURIComponent(user)}/events/public?per_page=100`).catch(() => []),
-  ])
-
-  const ownerRepos = repos.filter(repo => !repo.fork)
-  const stars = ownerRepos.reduce((sum, repo) => sum + repo.stargazers_count, 0)
-  const languages = await fetchLanguages(ownerRepos)
-  const streak = calcPublicEventStreak(events)
-
-  return {
-    stats: {
-      stars: String(stars),
-      commits: String(commits),
-      prs: String(prs),
-      issues: String(issues),
-      contributed: String(profile.public_repos || ownerRepos.length),
-    },
-    streak: {
-      currentStreak: String(streak.current),
-      longestStreak: String(streak.longest),
-      totalContribs: String(Math.max(commits + prs + issues, streak.total)),
-    },
-    languages,
-  }
-}
-
 export function svgToDataURI(svg: string): string {
   return `data:image/svg+xml,${encodeURIComponent(svg)}`
 }
@@ -304,11 +248,9 @@ function toNum(value: string): number {
 }
 
 function getTopLanguages(state: AppState): LangItem[] {
-  const fetched = parseFetchedLanguages(state.plugins.langs?.fields.languagesJson)
-  if (fetched.length) return fetched
-
   const counts = new Map<string, { value: number; color: string }>()
 
+  // Count from projects
   for (const project of state.projects.filter(p => p.enabled && p.language.trim())) {
     const label = project.language.trim()
     const current = counts.get(label)
@@ -318,6 +260,7 @@ function getTopLanguages(state: AppState): LangItem[] {
     })
   }
 
+  // If no projects, count from selected icons
   if (!counts.size) {
     for (const icon of state.icons.selected) {
       const label = ICON_LANGUAGE_MAP[icon]
@@ -330,6 +273,7 @@ function getTopLanguages(state: AppState): LangItem[] {
     }
   }
 
+  // Default if nothing
   if (!counts.size) {
     counts.set('TypeScript', { value: 45, color: LANGUAGE_COLORS.TypeScript })
     counts.set('JavaScript', { value: 30, color: LANGUAGE_COLORS.JavaScript })
@@ -346,162 +290,6 @@ function getTopLanguages(state: AppState): LangItem[] {
     }))
     .sort((a, b) => b.value - a.value)
     .slice(0, 5)
-}
-
-async function fetchAllPages<T>(url: string, maxPages: number): Promise<T[]> {
-  const result: T[] = []
-  let nextUrl: string | null = url
-  let page = 0
-
-  while (nextUrl && page < maxPages) {
-    const res = await fetch(nextUrl, { headers: githubHeaders() })
-    if (!res.ok) throw new Error(`GitHub API error: ${res.status}`)
-    result.push(...await res.json() as T[])
-    nextUrl = getNextUrl(res.headers.get('Link'))
-    page += 1
-  }
-
-  return result
-}
-
-async function fetchJson<T>(url: string): Promise<T> {
-  const res = await fetch(url, { headers: githubHeaders() })
-  if (!res.ok) throw new Error(`GitHub API error: ${res.status}`)
-  return res.json() as Promise<T>
-}
-
-async function safeSearchCount(url: string): Promise<number> {
-  try {
-    const res = await fetch(url, { headers: githubHeaders() })
-    if (!res.ok) return 0
-    const data = await res.json() as { total_count?: number }
-    return data.total_count ?? 0
-  } catch {
-    return 0
-  }
-}
-
-function githubHeaders(): HeadersInit {
-  return {
-    Accept: 'application/vnd.github+json',
-    'X-GitHub-Api-Version': '2022-11-28',
-  }
-}
-
-function getNextUrl(link: string | null): string | null {
-  if (!link) return null
-  const next = link.split(',').find(part => part.includes('rel="next"'))
-  return next?.match(/<([^>]+)>/)?.[1] ?? null
-}
-
-async function fetchLanguages(repos: GithubRepo[]): Promise<LangItem[]> {
-  const counts = new Map<string, { value: number; color: string }>()
-  const targets = repos.filter(repo => repo.languages_url).slice(0, 30)
-
-  await Promise.all(targets.map(async repo => {
-    try {
-      const langs = await fetchJson<Record<string, number>>(repo.languages_url)
-      for (const [label, value] of Object.entries(langs)) {
-        const current = counts.get(label)
-        counts.set(label, {
-          value: (current?.value ?? 0) + value,
-          color: current?.color ?? LANGUAGE_COLORS[label] ?? '#58a6ff',
-        })
-      }
-    } catch {
-      if (!repo.language) return
-      const current = counts.get(repo.language)
-      counts.set(repo.language, {
-        value: (current?.value ?? 0) + Math.max(1, repo.size),
-        color: current?.color ?? LANGUAGE_COLORS[repo.language] ?? '#58a6ff',
-      })
-    }
-  }))
-
-  const total = Array.from(counts.values()).reduce((sum, item) => sum + item.value, 0) || 1
-  return Array.from(counts.entries())
-    .map(([label, item]) => ({
-      label,
-      color: item.color,
-      value: Math.max(1, Math.round((item.value / total) * 100)),
-    }))
-    .sort((a, b) => b.value - a.value)
-    .slice(0, 5)
-}
-
-function parseFetchedLanguages(raw?: string): LangItem[] {
-  if (!raw) return []
-  try {
-    const parsed = JSON.parse(raw) as LangItem[]
-    if (!Array.isArray(parsed)) return []
-    return parsed
-      .filter(item => item.label && Number.isFinite(item.value) && item.color)
-      .slice(0, 5)
-  } catch {
-    return []
-  }
-}
-
-function calcPublicEventStreak(events: GithubEvent[]): { current: number; longest: number; total: number } {
-  const dates = new Set<string>()
-  let total = 0
-
-  for (const event of events) {
-    const count = event.type === 'PushEvent'
-      ? event.payload?.commits?.length ?? 1
-      : isContributionEvent(event.type) ? 1 : 0
-    if (!count) continue
-    total += count
-    dates.add(event.created_at.slice(0, 10))
-  }
-
-  if (!dates.size) return { current: 0, longest: 0, total: 0 }
-
-  const today = startOfUtcDay(new Date())
-  const yesterday = addDays(today, -1)
-  const currentStart = dates.has(toDateKey(today)) ? today : dates.has(toDateKey(yesterday)) ? yesterday : null
-  let current = 0
-  if (currentStart) {
-    let day = currentStart
-    while (dates.has(toDateKey(day))) {
-      current += 1
-      day = addDays(day, -1)
-    }
-  }
-
-  const ordered = Array.from(dates).sort()
-  let longest = 1
-  let run = 1
-  for (let i = 1; i < ordered.length; i += 1) {
-    const prev = new Date(`${ordered[i - 1]}T00:00:00Z`)
-    const curr = new Date(`${ordered[i]}T00:00:00Z`)
-    if ((curr.getTime() - prev.getTime()) / 86400000 === 1) {
-      run += 1
-      longest = Math.max(longest, run)
-    } else {
-      run = 1
-    }
-  }
-
-  return { current, longest, total }
-}
-
-function isContributionEvent(type: string): boolean {
-  return ['PullRequestEvent', 'IssuesEvent', 'CreateEvent', 'ReleaseEvent'].includes(type)
-}
-
-function startOfUtcDay(date: Date): Date {
-  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()))
-}
-
-function addDays(date: Date, amount: number): Date {
-  const next = new Date(date)
-  next.setUTCDate(next.getUTCDate() + amount)
-  return next
-}
-
-function toDateKey(date: Date): string {
-  return date.toISOString().slice(0, 10)
 }
 
 function esc(value: string): string {

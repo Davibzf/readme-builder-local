@@ -18,6 +18,7 @@ Feito por [Davibzf](https://github.com/Davibzf) · [Ver repositório](https://gi
 | Templates prontos (6 perfis) | ✅ |
 | Seção "Sobre mim" com fatos | ✅ |
 | Projetos em destaque personalizáveis | ✅ |
+| Cards de Estatísticas GitHub gerados localmente | ✅ 100% local |
 | 13 plugins (Snake, Stats, LeetCode...) | ✅ |
 | Multi-idioma PT / EN | ✅ |
 | Persistência via localStorage | ✅ |
