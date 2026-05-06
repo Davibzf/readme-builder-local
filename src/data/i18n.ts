@@ -1,0 +1,250 @@
+// ============================================================
+//  data/i18n.ts — UI translations (PT / EN)
+// ============================================================
+import type { Lang } from '../types'
+
+type Dict = Record<string, string>
+
+const PT: Dict = {
+  // Sidebar sections
+  sec_profile:   'Perfil',
+  sec_typing:    'Typing SVG',
+  sec_icons:     'Skill Icons',
+  sec_about:     'Sobre mim',
+  sec_projects:  'Projetos',
+  sec_plugins:   'Plugins',
+  sec_social:    'Links Sociais',
+  sec_badges:    'Badges',
+  sec_order:     'Ordem das seções',
+
+  // Profile labels
+  lbl_username:  'Username GitHub',
+  lbl_name:      'Nome / Título',
+  lbl_bio:       'Bio',
+  lbl_location:  'Localização',
+  lbl_pronouns:  'Pronomes',
+  lbl_focus:     'Foco principal',
+  lbl_website:   'Site / Portfolio',
+  lbl_openwork:  'Aberto a oportunidades',
+  lbl_theme:     'Tema dos cards',
+
+  // Typing
+  lbl_texts:     'Textos animados',
+  lbl_color:     'Cor',
+  lbl_speed:     'Velocidade (ms/char)',
+  lbl_font:      'Fonte',
+  lbl_fontsize:  'Tamanho (px)',
+  lbl_width:     'Largura (px)',
+  lbl_align:     'Alinhamento',
+  lbl_mode:      'Modo',
+  mode_local:    'Local (SVG gerado)',
+  mode_external: 'Externo (demolab.com)',
+  ph_typing:     'Ex: Backend Developer 🚀',
+
+  // Icons
+  lbl_source:    'Fonte',
+  lbl_perrow:    'Ícones por linha',
+  lbl_search:    'Buscar ícone...',
+  lbl_selected:  'Selecionados',
+
+  // About
+  lbl_paragraph: 'Parágrafo',
+  lbl_fact:      'Fato',
+  lbl_emoji:     'Emoji',
+
+  // Toolbar / Buttons
+  btn_preview:   '👁 Preview',
+  btn_markdown:  '📋 Markdown',
+  btn_copy:      'Copiar',
+  btn_copied:    '✓ Copiado!',
+  btn_download:  'Download README.md',
+  btn_clear:     'Limpar',
+  btn_reset:     'Resetar',
+  btn_export:    'Exportar JSON',
+  btn_import:    'Importar JSON',
+  btn_dl_svg:    'Baixar typing.svg',
+  btn_copy_svg:  'Copiar SVG',
+  btn_add:       'Adicionar',
+  btn_remove:    'Remover',
+  btn_apply:     'Aplicar template',
+
+  // Preview
+  btn_light:     'Light',
+  btn_dark:      'Dark',
+
+  // README sections
+  rm_stack:      '🛠 Stack & Ferramentas',
+  rm_stats:      '📊 GitHub Stats',
+  rm_trophies:   '🏆 Conquistas',
+  rm_snake:      '🐍 Contribuições',
+  rm_activity:   '📈 Atividade',
+  rm_wakatime:   '⏱ Tempo de Código',
+  rm_spotify:    '🎵 Ouvindo Agora',
+  rm_leetcode:   '🧩 LeetCode Stats',
+  rm_codewars:   '⚔️ Codewars',
+  rm_about:      '👋 Sobre mim',
+  rm_projects:   '📌 Projetos em destaque',
+
+  // Focus labels
+  focus_fullstack: 'Full Stack Developer',
+  focus_backend:   'Backend Developer',
+  focus_frontend:  'Frontend Developer',
+  focus_mobile:    'Mobile Developer',
+  focus_devops:    'DevOps / SRE Engineer',
+  focus_data:      'Data Engineer / AI',
+  focus_security:  'Security Engineer',
+  focus_gamedev:   'Game Developer',
+  focus_student:   'Estudante de Dev',
+
+  // Toasts
+  toast_copied:   'Copiado!',
+  toast_imported: 'Configuração importada!',
+  toast_error:    'Erro ao importar JSON.',
+  toast_reset:    'Configuração resetada.',
+  toast_svg_ok:   'SVG copiado!',
+  toast_applied:  'Template aplicado!',
+
+  // Plugins
+  plugin_snake:   'Snake Game',
+  plugin_stats:   'GitHub Stats',
+  plugin_streak:  'Streak Stats',
+  plugin_langs:   'Top Languages',
+  plugin_trophy:  'Trophies',
+  plugin_graph:   'Activity Graph',
+  plugin_views:   'Visitor Count',
+  plugin_waka:    'WakaTime',
+  plugin_spotify: 'Spotify Now Playing',
+  plugin_leet:    'LeetCode Stats',
+  plugin_cw:      'Codewars Stats',
+  plugin_hr:      'HackerRank',
+  plugin_wave:    'Wave Header/Footer',
+  lbl_waka_user:  'Username WakaTime',
+  lbl_leet_user:  'Username LeetCode',
+  lbl_cw_user:    'Username Codewars',
+  lbl_hr_user:    'Username HackerRank',
+
+  // Misc
+  templates:      'Templates',
+  confirm_reset:  'Resetar todas as configurações?',
+  open_work_badge:'Aberto a oportunidades',
+  visitors:       'VISITANTES',
+}
+
+const EN: Dict = {
+  sec_profile:   'Profile',
+  sec_typing:    'Typing SVG',
+  sec_icons:     'Skill Icons',
+  sec_about:     'About me',
+  sec_projects:  'Projects',
+  sec_plugins:   'Plugins',
+  sec_social:    'Social Links',
+  sec_badges:    'Badges',
+  sec_order:     'Section order',
+
+  lbl_username:  'GitHub Username',
+  lbl_name:      'Name / Title',
+  lbl_bio:       'Bio',
+  lbl_location:  'Location',
+  lbl_pronouns:  'Pronouns',
+  lbl_focus:     'Main focus',
+  lbl_website:   'Website / Portfolio',
+  lbl_openwork:  'Open to work',
+  lbl_theme:     'Cards theme',
+
+  lbl_texts:     'Animated texts',
+  lbl_color:     'Color',
+  lbl_speed:     'Speed (ms/char)',
+  lbl_font:      'Font',
+  lbl_fontsize:  'Size (px)',
+  lbl_width:     'Width (px)',
+  lbl_align:     'Align',
+  lbl_mode:      'Mode',
+  mode_local:    'Local (generated SVG)',
+  mode_external: 'External (demolab.com)',
+  ph_typing:     'E.g. Backend Developer 🚀',
+
+  lbl_source:    'Source',
+  lbl_perrow:    'Icons per row',
+  lbl_search:    'Search icon...',
+  lbl_selected:  'Selected',
+
+  lbl_paragraph: 'Paragraph',
+  lbl_fact:      'Fact',
+  lbl_emoji:     'Emoji',
+
+  btn_preview:   '👁 Preview',
+  btn_markdown:  '📋 Markdown',
+  btn_copy:      'Copy',
+  btn_copied:    '✓ Copied!',
+  btn_download:  'Download README.md',
+  btn_clear:     'Clear',
+  btn_reset:     'Reset',
+  btn_export:    'Export JSON',
+  btn_import:    'Import JSON',
+  btn_dl_svg:    'Download typing.svg',
+  btn_copy_svg:  'Copy SVG',
+  btn_add:       'Add',
+  btn_remove:    'Remove',
+  btn_apply:     'Apply template',
+
+  btn_light:     'Light',
+  btn_dark:      'Dark',
+
+  rm_stack:      '🛠 Stack & Tools',
+  rm_stats:      '📊 GitHub Stats',
+  rm_trophies:   '🏆 Achievements',
+  rm_snake:      '🐍 Contributions',
+  rm_activity:   '📈 Activity',
+  rm_wakatime:   '⏱ Coding Time',
+  rm_spotify:    '🎵 Now Playing',
+  rm_leetcode:   '🧩 LeetCode Stats',
+  rm_codewars:   '⚔️ Codewars',
+  rm_about:      '👋 About me',
+  rm_projects:   '📌 Featured projects',
+
+  focus_fullstack: 'Full Stack Developer',
+  focus_backend:   'Backend Developer',
+  focus_frontend:  'Frontend Developer',
+  focus_mobile:    'Mobile Developer',
+  focus_devops:    'DevOps / SRE Engineer',
+  focus_data:      'Data Engineer / AI',
+  focus_security:  'Security Engineer',
+  focus_gamedev:   'Game Developer',
+  focus_student:   'Dev Student',
+
+  toast_copied:   'Copied!',
+  toast_imported: 'Configuration imported!',
+  toast_error:    'Error importing JSON.',
+  toast_reset:    'Configuration reset.',
+  toast_svg_ok:   'SVG copied!',
+  toast_applied:  'Template applied!',
+
+  plugin_snake:   'Snake Game',
+  plugin_stats:   'GitHub Stats',
+  plugin_streak:  'Streak Stats',
+  plugin_langs:   'Top Languages',
+  plugin_trophy:  'Trophies',
+  plugin_graph:   'Activity Graph',
+  plugin_views:   'Visitor Count',
+  plugin_waka:    'WakaTime',
+  plugin_spotify: 'Spotify Now Playing',
+  plugin_leet:    'LeetCode Stats',
+  plugin_cw:      'Codewars Stats',
+  plugin_hr:      'HackerRank',
+  plugin_wave:    'Wave Header/Footer',
+  lbl_waka_user:  'WakaTime Username',
+  lbl_leet_user:  'LeetCode Username',
+  lbl_cw_user:    'Codewars Username',
+  lbl_hr_user:    'HackerRank Username',
+
+  templates:      'Templates',
+  confirm_reset:  'Reset all settings?',
+  open_work_badge:'Open to work',
+  visitors:       'VISITORS',
+}
+
+const DICTS: Record<Lang, Dict> = { pt: PT, en: EN }
+
+export function t(lang: Lang, key: string): string {
+  return DICTS[lang]?.[key] ?? DICTS.pt[key] ?? key
+}

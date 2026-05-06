@@ -1,0 +1,16 @@
+export const COLOR_PALETTE = [
+  { hex: '58a6ff', name: 'GitHub Blue'  },
+  { hex: '3fb950', name: 'Matrix Green' },
+  { hex: 'f78166', name: 'Coral'        },
+  { hex: 'd2a8ff', name: 'Lavender'     },
+  { hex: 'ffa657', name: 'Amber'        },
+  { hex: 'ff7b72', name: 'Salmon'       },
+  { hex: '79c0ff', name: 'Sky'          },
+  { hex: 'e3b341', name: 'Gold'         },
+  { hex: 'a5f3fc', name: 'Cyan'         },
+  { hex: 'f0abfc', name: 'Pink'         },
+  { hex: '86efac', name: 'Mint'         },
+  { hex: 'fb923c', name: 'Orange'       },
+  { hex: 'ffffff', name: 'White'        },
+  { hex: 'c9d1d9', name: 'Gray'         },
+]
