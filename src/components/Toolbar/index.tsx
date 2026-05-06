@@ -20,6 +20,7 @@ export default function Toolbar({ state, setView, exportConfig, importConfig, on
   return (
     <div className="toolbar">
       <div className="toolbar-left">
+        <img className="toolbar-logo" src="/logo.png" alt="" />
         <span className="file-path">
           // github.com/<strong>{state.profile.username || 'username'}</strong>/README.md
         </span>

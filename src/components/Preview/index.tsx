@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
 import type { AppState } from '../../types'
-import { generateTypingSVG } from '../../generators/typing-svg'
+import { generateTypingSVG, generateVisitorBadgeSVG, generateWaveSVG } from '../../generators/typing-svg'
 import { generateGithubStatsCard, generateGithubStreakCard, generateTopLangsCard, svgToDataURI } from '../../generators/github-stats'
+import { generateSnakePreviewSVG } from '../../generators/snake-game'
 import { getFontById } from '../../data/fonts'
 import { t } from '../../data/i18n'
 
@@ -25,6 +26,23 @@ export default function Preview({ state }: Props) {
     streak: generateGithubStreakCard(state),
     langs: generateTopLangsCard(state),
   }), [state])
+  const snakeSvg = useMemo(() => generateSnakePreviewSVG(state), [state])
+  const visitorBadgeSvg = useMemo(
+    () => generateVisitorBadgeSVG(lang === 'pt' ? 'VISITANTES' : 'VISITORS'),
+    [lang],
+  )
+  const waveFields = plugins.wave?.fields ?? {}
+  const waveColor = normalizeHex(waveFields.color || '58a6ff')
+  const waveHeaderText = waveFields.headerText?.trim() ?? ''
+  const waveFooterText = waveFields.footerText?.trim() ?? ''
+  const waveHeaderSvg = useMemo(
+    () => generateWaveSVG('header', waveColor, 104, waveHeaderText),
+    [waveColor, waveHeaderText],
+  )
+  const waveFooterSvg = useMemo(
+    () => generateWaveSVG('footer', waveColor, 86, waveFooterText),
+    [waveColor, waveFooterText],
+  )
 
   const user = profile.username || 'seu-username'
   const focus = getFocusLabelLocal(profile.focus, lang)
@@ -35,9 +53,7 @@ export default function Preview({ state }: Props) {
 
         {/* Wave header */}
         {plugins['wave']?.enabled && (
-          <div className="wave-header" style={{ background: 'linear-gradient(135deg,#1a6ed8,#58a6ff)', height:80, borderRadius:'8px 8px 0 0', margin:'-36px -40px 20px', display:'flex', alignItems:'center', justifyContent:'center' }}>
-            <span style={{ color:'#fff', fontSize:24, fontWeight:700 }}>{profile.displayName}</span>
-          </div>
+          <div className="wave-preview wave-preview-header" dangerouslySetInnerHTML={{ __html: waveHeaderSvg }} />
         )}
 
         {/* Header */}
@@ -122,12 +138,21 @@ export default function Preview({ state }: Props) {
           </>
         )}
 
+        {/* Visitor Count */}
+        {plugins['views']?.enabled && (
+          <>
+            <h2 className="rm-h2">{tr('plugin_views')}</h2>
+            <div className="visitor-badge-preview">
+              <img src={svgToDataURI(visitorBadgeSvg)} alt={tr('plugin_views')} />
+            </div>
+          </>
+        )}
+
         {/* Snake */}
         {plugins['snake']?.enabled && (
           <>
-            <h2 className="rm-h2">{tr('rm_snake')}</h2>
-            <img src={`https://raw.githubusercontent.com/${user}/${user}/output/github-contribution-grid-snake-dark.svg`} alt="snake" style={{ maxWidth:'100%', borderRadius:6 }}
-              onError={e => { (e.currentTarget as HTMLImageElement).src = 'https://raw.githubusercontent.com/platane/platane/output/github-contribution-grid-snake-dark.svg' }} />
+            <h2 className="rm-h2">Snake Game</h2>
+            <div className="snake-preview" dangerouslySetInnerHTML={{ __html: snakeSvg }} />
           </>
         )}
 
@@ -151,6 +176,10 @@ export default function Preview({ state }: Props) {
           </>
         )}
 
+        {plugins['wave']?.enabled && (
+          <div className="wave-preview wave-preview-footer" dangerouslySetInnerHTML={{ __html: waveFooterSvg }} />
+        )}
+
         <hr className="rm-hr" />
         <p style={{ textAlign:'center', fontSize:12, opacity:.5 }}>⚡ README Builder V2 - Davibzf ⚡</p>
       </div>
@@ -168,6 +197,11 @@ function chunkIcons(ids: string[], perRow: number): string[][] {
     rows.push(ids.slice(i, i + perRow))
   }
   return rows
+}
+
+function normalizeHex(value: string): string {
+  const hex = value.replace('#', '').trim()
+  return /^[0-9a-fA-F]{6}$/.test(hex) ? hex : '58a6ff'
 }
 
 function SocialBadge({ label, color }: { label: string; color: string }) {

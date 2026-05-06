@@ -13,7 +13,7 @@ interface PluginMeta {
 
 const PLUGIN_META: PluginMeta[] = [
   { id:'snake',        emoji:'🐍', nameKey:'plugin_snake',   descPt:'Cobrinha animada nos commits',         descEn:'Animated snake on commits' },
-  { id:'stats',        emoji:'📊', nameKey:'plugin_stats',   descPt:'Card de estatísticas GitHub',          descEn:'GitHub stats card' },
+  { id:'stats',        emoji:'📊', nameKey:'plugin_stats',   descPt:'Card de estatísticas GitHub',          descEn:'GitHub Stats card' },
   { id:'streak',       emoji:'🔥', nameKey:'plugin_streak',  descPt:'Sequência de commits diários',         descEn:'Daily commit streak' },
   { id:'langs',        emoji:'💬', nameKey:'plugin_langs',   descPt:'Linguagens mais usadas',               descEn:'Most used languages' },
   { id:'trophy',       emoji:'🏆', nameKey:'plugin_trophy',  descPt:'Conquistas do perfil',                 descEn:'Profile trophies' },
@@ -46,7 +46,7 @@ export default function PluginsSection({ state, togglePlugin, setPluginField }: 
         const plug = state.plugins[pm.id]
         const on   = plug?.enabled ?? false
         const desc = state.lang === 'en' ? pm.descEn : pm.descPt
-        const fields = pm.fields
+        const fields = getPluginFields(pm.id, pm.fields)
         return (
           <div key={pm.id} className={`plugin-card${on?' active':''}`}>
             <div className="plugin-header">
@@ -73,4 +73,43 @@ export default function PluginsSection({ state, togglePlugin, setPluginField }: 
       })}
     </div>
   )
+}
+
+function getPluginFields(id: PluginId, fields?: PluginMeta['fields']): PluginMeta['fields'] {
+  if (id === 'wakatime') return [
+    { key:'wakaUsername', labelKey:'lbl_waka_user', ph:'username' },
+    { key:'wakaHours', labelKey:'lbl_waka_hours', ph:'12h/week' },
+    { key:'wakaLanguage', labelKey:'lbl_waka_lang', ph:'TypeScript' },
+    { key:'wakaEditor', labelKey:'lbl_waka_editor', ph:'VS Code' },
+  ]
+  if (id === 'spotify') return [
+    { key:'spotifyStatus', labelKey:'lbl_spotify_status', ph:'Now playing' },
+    { key:'spotifyTrack', labelKey:'lbl_spotify_track', ph:'Song name' },
+    { key:'spotifyArtist', labelKey:'lbl_spotify_artist', ph:'Artist' },
+    { key:'spotifyAlbum', labelKey:'lbl_spotify_album', ph:'Album' },
+  ]
+  if (id === 'leetcode') return [
+    { key:'leetcodeUser', labelKey:'lbl_leet_user', ph:'username' },
+    { key:'leetcodeSolved', labelKey:'lbl_leet_solved', ph:'128 solved' },
+    { key:'leetcodeRank', labelKey:'lbl_leet_rank', ph:'Rank 250000' },
+    { key:'leetcodeLanguage', labelKey:'lbl_leet_lang', ph:'Algorithms' },
+  ]
+  if (id === 'codewars') return [
+    { key:'codewarsUser', labelKey:'lbl_cw_user', ph:'username' },
+    { key:'codewarsRank', labelKey:'lbl_cw_rank', ph:'5 kyu' },
+    { key:'codewarsHonor', labelKey:'lbl_cw_honor', ph:'1200 honor' },
+    { key:'codewarsKatas', labelKey:'lbl_cw_katas', ph:'80 katas' },
+  ]
+  if (id === 'hackerrank') return [
+    { key:'hackerrankUser', labelKey:'lbl_hr_user', ph:'username' },
+    { key:'hackerrankBadge', labelKey:'lbl_hr_badge', ph:'Problem Solving' },
+    { key:'hackerrankStars', labelKey:'lbl_hr_stars', ph:'5 stars' },
+    { key:'hackerrankLevel', labelKey:'lbl_hr_level', ph:'Intermediate' },
+  ]
+  if (id === 'wave') return [
+    { key:'headerText', labelKey:'lbl_wave_header', ph:'README Builder' },
+    { key:'footerText', labelKey:'lbl_wave_footer', ph:'github.com/seu-username' },
+    { key:'color', labelKey:'lbl_wave_color', ph:'58a6ff' },
+  ]
+  return fields
 }

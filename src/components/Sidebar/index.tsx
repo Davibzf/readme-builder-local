@@ -64,7 +64,7 @@ export default function Sidebar(props: Props) {
       <div className="sidebar-header">
         <div className="logo-row">
           <div className="logo">
-            <span className="logo-pulse" />
+            <img className="logo-mark" src="/logo.png" alt="" />
             README Builder
             <span className="logo-badge">v2</span>
           </div>

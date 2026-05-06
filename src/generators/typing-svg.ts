@@ -364,21 +364,29 @@ export function generateWaveSVG(
   text: string = '',
   width: number = 900,
 ): string {
-  const hex = '#' + color.replace('#', '')
+  const cleanColor = color.replace('#', '').slice(0, 6)
+  const hex = /^[0-9a-fA-F]{6}$/.test(cleanColor) ? `#${cleanColor}` : '#58a6ff'
   const isHeader = position === 'header'
+  const safeText = text.trim()
+  const fontSize = Math.max(16, Math.min(28, Math.floor(width / Math.max(18, safeText.length * 0.72))))
 
-  const wavePath = isHeader
-    ? `M0,${height} C${width*0.25},${height*0.4} ${width*0.75},${height*0.1} ${width},${height*0.5} L${width},0 L0,0 Z`
-    : `M0,0 C${width*0.25},${height*0.6} ${width*0.75},${height*0.9} ${width},${height*0.5} L${width},${height} L0,${height} Z`
+  const backPath = isHeader
+    ? `M0,0 H${width} V${Math.round(height * 0.62)} C${Math.round(width * 0.72)},${Math.round(height * 0.95)} ${Math.round(width * 0.28)},${Math.round(height * 0.16)} 0,${Math.round(height * 0.72)} Z`
+    : `M0,${Math.round(height * 0.28)} C${Math.round(width * 0.28)},${Math.round(height * 0.02)} ${Math.round(width * 0.72)},${Math.round(height * 0.96)} ${width},${Math.round(height * 0.36)} V${height} H0 Z`
 
-  const textEl = text
-    ? `<text x="${width/2}" y="${isHeader ? Math.round(height*0.65) : Math.round(height*0.45)}"
-        font-family="sans-serif" font-size="28" font-weight="700" fill="#fff"
-        text-anchor="middle">${esc(text)}</text>`
+  const frontPath = isHeader
+    ? `M0,0 H${width} V${Math.round(height * 0.48)} C${Math.round(width * 0.65)},${Math.round(height * 0.76)} ${Math.round(width * 0.34)},${Math.round(height * 0.28)} 0,${Math.round(height * 0.56)} Z`
+    : `M0,${Math.round(height * 0.45)} C${Math.round(width * 0.34)},${Math.round(height * 0.17)} ${Math.round(width * 0.66)},${Math.round(height * 0.84)} ${width},${Math.round(height * 0.52)} V${height} H0 Z`
+
+  const textEl = safeText
+    ? `<text x="${width / 2}" y="${isHeader ? Math.round(height * 0.37) : Math.round(height * 0.75)}"
+        font-family="Arial, sans-serif" font-size="${fontSize}" font-weight="700" fill="#fff"
+        text-anchor="middle" dominant-baseline="middle">${esc(safeText)}</text>`
     : ''
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="100%">
-  <path d="${wavePath}" fill="${hex}"/>
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="100%" role="img">
+  <path d="${backPath}" fill="${hex}" opacity=".38"/>
+  <path d="${frontPath}" fill="${hex}"/>
   ${textEl}
 </svg>`
 }
