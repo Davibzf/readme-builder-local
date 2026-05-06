@@ -145,15 +145,15 @@ export function generateGithubStatsCard(state: AppState): string {
   const contributed = field(fields, 'contributed', '0')
   const rank = calcRank([stars, commits, prs, issues, contributed])
 
-  return card(515, 250, colors, `
-    ${title('GitHub Stats', 26, 38, colors)}
+  return card(520, 260, colors, `
+    ${title(`GitHub Stats`, 26, 38, colors)}
     ${subtitle(username, 26, 60, colors)}
     ${rankBadge(rank, 432, 30, colors)}
-    ${statBlock('Total Stars', stars, 26, 94, 218, colors.accent, colors)}
-    ${statBlock('Total Commits', commits, 276, 94, 218, colors.accent2, colors)}
+    ${statBlock('Total Stars', stars, 26, 84, 218, colors.accent, colors)}
+    ${statBlock('Total Commits', commits, 276, 84, 218, colors.accent2, colors)}
     ${statBlock('Pull Requests', prs, 26, 148, 218, colors.title, colors)}
     ${statBlock('Issues', issues, 276, 148, 218, '#f85149', colors)}
-    ${statBlock('Public Repos', contributed, 26, 202, 468, '#a371f7', colors)}
+    ${statBlock('Public Repos', contributed, 26, 212, 468, '#a371f7', colors)}
   `)
 }
 
@@ -168,9 +168,9 @@ export function generateGithubStreakCard(state: AppState): string {
   return card(520, 220, colors, `
     ${title('Contribution Streak', 26, 38, colors)}
     ${subtitle(username, 26, 60, colors)}
-    ${numberBlock(current, 'Current streak', 26, 112, 140, colors.accent, colors)}
-    ${numberBlock(longest, 'Longest streak', 190, 112, 140, colors.accent2, colors)}
-    ${numberBlock(total, 'Contributions', 354, 112, 140, colors.title, colors)}
+    ${numberBlock(current, 'Current streak', 26, 92, 140, colors.accent, colors)}
+    ${numberBlock(longest, 'Longest streak', 190, 92, 140, colors.accent2, colors)}
+    ${numberBlock(total, 'Contributions', 354, 92, 140, colors.title, colors)}
     <text x="26" y="190" fill="${colors.muted}" font-size="11" font-family="Arial, sans-serif">Based on public GitHub activity available to the API</text>
   `)
 }
@@ -179,7 +179,7 @@ export function generateTopLangsCard(state: AppState): string {
   const colors = getTheme(state.statsTheme)
   const langs = getTopLanguages(state)
   const rows = langs.map((lang, index) => {
-    const y = 99 + index * 32
+    const y = 82 + index * 31
     return `
       <circle cx="32" cy="${y - 4}" r="5" fill="${esc(lang.color)}"/>
       <text x="48" y="${y}" fill="${colors.text}" font-size="13" font-family="Arial, sans-serif">${esc(lang.label)}</text>
@@ -190,8 +190,8 @@ export function generateTopLangsCard(state: AppState): string {
   }).join('')
 
   return card(520, 250, colors, `
-    ${title('Top Languages', 26, 35, colors)}
-    ${subtitle('Repository language breakdown', 26, 58, colors)}
+    ${title('Top Languages', 26, 38, colors)}
+    ${subtitle('Repository language breakdown', 26, 60, colors)}
     ${rows}
   `)
 }
@@ -296,7 +296,7 @@ function calcRank(values: string[]): string {
   if (score >= 350) return 'A+'
   if (score >= 180) return 'A'
   if (score >= 80) return 'B+'
-  return 'Builder'
+  return 'LOCAL'
 }
 
 function toNum(value: string): number {

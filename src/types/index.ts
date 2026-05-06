@@ -17,7 +17,6 @@ export interface Profile {
   focus: FocusKey
   website: string
   openToWork: boolean
-  pronouns?: string
 }
 
 export type FocusKey =

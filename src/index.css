@@ -52,7 +52,8 @@ body { background: var(--bg); color: var(--text); font-family: var(--sans); font
 .sidebar-header { padding: 14px 16px 12px; border-bottom: 1px solid var(--border); background: var(--bg); flex-shrink: 0; }
 .logo-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .logo { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--blue); }
-.logo-mark { width: 26px; height: 26px; border-radius: 6px; object-fit: contain; flex-shrink: 0; }
+.logo-pulse { width: 8px; height: 8px; background: var(--green); border-radius: 50%; flex-shrink: 0; animation: pulse 2.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(61,214,140,.4)} 50%{box-shadow:0 0 0 5px rgba(61,214,140,0)} }
 .logo-badge { font-size: 9px; padding: 2px 7px; border-radius: 10px; background: rgba(74,158,255,.12); color: var(--blue); border: 1px solid rgba(74,158,255,.25); font-family: var(--mono); }
 .header-controls { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .ctrl-label { font-size: 9px; color: var(--dim); font-family: var(--mono); text-transform: uppercase; letter-spacing: .8px; }
@@ -183,7 +184,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px;
 .toolbar { height: var(--toolbar-h); background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 16px; flex-shrink: 0; gap: 8px; }
 .toolbar-left { display: flex; align-items: center; gap: 8px; min-width: 0; overflow: hidden; }
 .toolbar-right { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
-.toolbar-logo { width: 24px; height: 24px; border-radius: 6px; object-fit: contain; flex-shrink: 0; }
 .file-path { font-family: var(--mono); font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .file-path strong { color: var(--blue); }
 .view-btn { padding: 5px 12px; border-radius: var(--r); font-family: var(--mono); font-size: 11px; border: 1px solid var(--border); background: var(--bg3); color: var(--dim); cursor: pointer; transition: all var(--t); }
@@ -206,10 +206,6 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px;
 .readme-card { max-width: 800px; margin: 0 auto; border-radius: 12px; padding: 36px 40px; box-shadow: 0 2px 4px rgba(0,0,0,.12), 0 8px 32px rgba(0,0,0,.14); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.7; }
 .rm-light { background: #fff; color: #1f2328; }
 .rm-dark  { background: #161b22; color: #e6edf3; }
-.wave-preview { overflow: hidden; line-height: 0; }
-.wave-preview svg { display: block; width: 100%; height: auto; }
-.wave-preview-header { margin: -36px -40px 20px; border-radius: 12px 12px 0 0; }
-.wave-preview-footer { margin: 22px -40px 0; border-radius: 0 0 12px 12px; }
 .rm-center { text-align: center; margin-bottom: 10px; }
 .rm-h1 { font-size: 28px; font-weight: 800; margin-bottom: 6px; }
 .rm-subtitle { font-size: 15px; font-weight: 500; margin-bottom: 4px; opacity: .7; }
@@ -232,11 +228,7 @@ input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px;
 .rm-icons.left .rm-icons-row { justify-content: flex-start; }
 .rm-stats-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; margin: 8px 0; }
 .stat-img { border-radius: 8px; height: 160px; max-width: 100%; }
-.local-stat-img { width: min(100%, 500px); height: auto; }
-.visitor-badge-preview { display: flex; justify-content: center; margin: 8px 0; }
-.visitor-badge-preview img { height: 24px; width: auto; image-rendering: auto; }
-.snake-preview { display: flex; justify-content: center; margin: 8px 0 0; overflow: hidden; }
-.snake-preview svg { width: 100%; max-width: 760px; height: auto; display: block; border-radius: 10px; }
+.local-stat-img { width: min(100%, 520px); height: auto; }
 .typing-wrap { display: flex; justify-content: center; margin: 10px 0; }
 .social-badges { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin: 12px 0; }
 .social-badge { display: inline-block; padding: 5px 14px; border-radius: 4px; font-size: 12px; font-weight: 600; color: #fff; letter-spacing: .5px; }
