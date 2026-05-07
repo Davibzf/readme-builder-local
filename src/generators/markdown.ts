@@ -1,20 +1,17 @@
 // ============================================================
 //  generators/markdown.ts
-//  100% LOCAL markdown generator — zero external URLs
+//  README markdown generator
 // ============================================================
 import type { AppState, SectionId, PinnedProject } from '../types'
 import { t } from '../data/i18n'
 import { generateTypingSVG, generateWaveSVG, generateBadgeSVG } from './typing-svg'
 import { generateGithubStatsCard, generateGithubStreakCard, generateTopLangsCard } from './github-stats'
 import { getFontById } from '../data/fonts'
+import { getIconMarkdownSrc } from '../data/icons'
 
-// Base URL for assets when the README is hosted in the user's own repo
-// User should set this to their repo's raw URL after downloading
 const ASSET_NOTE = `<!-- 
-  ⚠️  IMPORTANTE: este README foi gerado 100% localmente.
-  Os ícones e SVGs estão em ./assets/ neste repositório.
-  Copie a pasta assets/ para o seu repositório username/username.
-  Nenhum serviço externo é necessário.
+  Icones servidos pelo README Builder:
+  https://readmebuilderv.vercel.app/assets/icons/
 -->`
 
 export function generateMarkdown(state: AppState): string {
@@ -35,7 +32,7 @@ export function generateMarkdown(state: AppState): string {
     typingMd = `<img src="${encoded}" alt="Typing SVG" />`
   }
 
-  // Icons markdown: inline SVG data URIs (fully offline)
+  // Icons markdown: public hosted SVG URLs
   const iconsMd = buildIconsMarkdown(state)
 
   // Social badges: inline SVG data URIs
@@ -195,7 +192,7 @@ function buildIconsMarkdown(state: AppState): string {
   const { icons } = state
   if (!icons.selected.length) return ''
 
-  // Use only local assets and force row breaks so "icons per row" is respected.
+  // Use public hosted assets and force row breaks so "icons per row" is respected.
   const perRow = getSafePerRow(icons.perRow)
   const align = icons.align === 'left' ? 'left' : 'center'
   const rows: string[][] = []
@@ -205,7 +202,7 @@ function buildIconsMarkdown(state: AppState): string {
 
   const rowsMd = rows.map(row =>
     row.map(id =>
-      `<img src="./assets/icons/${id}.svg" width="40" alt="${id}" title="${id}" />`
+      `<img src="${getIconMarkdownSrc(id)}" width="40" alt="${id}" title="${id}" />`
     ).join(' ')
   ).join('\n<br />\n')
 

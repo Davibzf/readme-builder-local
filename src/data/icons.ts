@@ -18,6 +18,8 @@ export const ICON_CATEGORIES: Record<CategoryKey, { labelPt: string; labelEn: st
 }
 
 // hasLocal = arquivo existe em public/assets/icons/{id}.svg
+export const ICON_ASSET_BASE_URL = 'https://readmebuilderv.vercel.app/assets/icons'
+
 const ICONS_RAW: Array<[string, string, CategoryKey, boolean]> = [
   // id, label, category, hasLocal
   // Backend
@@ -212,6 +214,5 @@ export function getIconPreviewSrc(id: string): string {
 
 // Returns the path to embed in the generated Markdown
 export function getIconMarkdownSrc(id: string): string {
-  // Points to the repo's own assets — works after the user pushes their README repo
-  return `./assets/icons/${id}.svg`
+  return `${ICON_ASSET_BASE_URL}/${id}.svg`
 }
