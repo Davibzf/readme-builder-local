@@ -4,14 +4,18 @@
 // ============================================================
 import type { AppState, SectionId, PinnedProject } from '../types'
 import { t } from '../data/i18n'
-import { generateTypingSVG, generateWaveSVG, generateBadgeSVG } from './typing-svg'
+import { generateWaveSVG } from './typing-svg'
 import { generateGithubStatsCard, generateGithubStreakCard, generateTopLangsCard } from './github-stats'
 import { getFontById } from '../data/fonts'
 import { getIconMarkdownSrc } from '../data/icons'
 
+const PUBLIC_BASE_URL = 'https://readmebuilderv.vercel.app'
+
 const ASSET_NOTE = `<!-- 
   Icones servidos pelo README Builder:
   https://readmebuilderv.vercel.app/assets/icons/
+  Typing SVG e badges sociais servidos por:
+  https://readmebuilderv.vercel.app/api/
 -->`
 
 export function generateMarkdown(state: AppState): string {
@@ -19,23 +23,20 @@ export function generateMarkdown(state: AppState): string {
   const tr = (key: string) => t(lang, key)
   const user = profile.username || 'seu-username'
 
-  // Typing SVG: always embed as data URI in offline-first mode
+  // Typing SVG: public hosted SVG URL
   const typingConfig = typing
   const font = getFontById(typing.font)
   const lines = typing.texts.filter(s => s.trim())
 
   let typingMd = ''
   if (lines.length) {
-    // Embed the SVG as a data URI so it works without any hosting
-    const svg = generateTypingSVG({ ...typingConfig, texts: lines })
-    const encoded = svgToDataURI(svg)
-    typingMd = `<img src="${encoded}" alt="Typing SVG" />`
+    typingMd = `<img src="${buildTypingSvgUrl({ ...typingConfig, texts: lines }, font.stack)}" alt="Typing SVG" />`
   }
 
   // Icons markdown: public hosted SVG URLs
   const iconsMd = buildIconsMarkdown(state)
 
-  // Social badges: inline SVG data URIs
+  // Social badges: public hosted SVG URLs
   const socialMd = buildSocialBadges(state)
 
   // Build ordered sections
@@ -79,8 +80,7 @@ function buildSection(
       if (profile.bio) md += `> *${profile.bio}*\n\n`
       if (profile.location) md += `📍 ${profile.location}\n\n`
       if (profile.openToWork) {
-        const badge = generateBadgeSVG({ label: 'Open to work', message: '✓', labelColor: '238636', messageColor: '2ea043', style: 'flat-square' })
-        md += `<img src="${svgToDataURI(badge)}" alt="Open to work">\n\n`
+        md += `<img src="${buildBadgeUrl({ label: 'Open to work', message: 'yes', labelColor: '238636', messageColor: '2ea043', style: 'flat-square' })}" alt="Open to work">\n\n`
       }
       if (typingMd) md += typingMd + '\n\n'
       if (socialMd) md += socialMd + '\n\n'
@@ -231,14 +231,14 @@ function buildSocialBadges(state: AppState): string {
   for (const def of SOCIAL_DEFS) {
     const val = social[def.key]
     if (!val) continue
-    const svg = generateBadgeSVG({
-      label: def.label, message: '',
+    const badgeUrl = buildBadgeUrl({
+      label: def.label,
+      message: '',
       labelColor: def.labelColor, messageColor: def.msgColor,
       style: 'for-the-badge',
     })
-    // Just use local badge + link
     const url = getSocialUrl(def.key, val)
-    badges.push(`<a href="${url}"><img src="${svgToDataURI(svg)}" alt="${def.label}"></a>`)
+    badges.push(`<a href="${url}"><img src="${badgeUrl}" alt="${def.label}"></a>`)
   }
 
   return badges.length ? badges.join('\n') : ''
@@ -270,6 +270,36 @@ function buildProjectCard(proj: PinnedProject): string {
 function svgToDataURI(svg: string): string {
   const encoded = encodeURIComponent(svg)
   return `data:image/svg+xml,${encoded}`
+}
+
+function buildTypingSvgUrl(config: AppState['typing'], fontStack: string): string {
+  const params = new URLSearchParams()
+  for (const text of config.texts.filter(s => s.trim())) params.append('text', text.trim())
+  params.set('color', config.color.replace('#', ''))
+  params.set('speed', String(config.speed))
+  params.set('pause', String(config.pause))
+  params.set('fontSize', String(config.fontSize))
+  params.set('width', String(config.width))
+  params.set('height', String(config.height))
+  params.set('align', config.align)
+  params.set('repeat', config.repeat ? 'true' : 'false')
+  params.set('font', fontStack)
+  return htmlAttrUrl(`${PUBLIC_BASE_URL}/api/typing.svg?${params.toString()}`)
+}
+
+function buildBadgeUrl(opts: { label: string; message: string; labelColor: string; messageColor: string; style: string }): string {
+  const params = new URLSearchParams({
+    label: opts.label,
+    message: opts.message,
+    labelColor: opts.labelColor,
+    messageColor: opts.messageColor,
+    style: opts.style,
+  })
+  return htmlAttrUrl(`${PUBLIC_BASE_URL}/api/badge.svg?${params.toString()}`)
+}
+
+function htmlAttrUrl(url: string): string {
+  return url.replace(/&/g, '&amp;')
 }
 
 function svgToImgTag(svg: string, alt: string): string {
