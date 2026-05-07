@@ -511,3 +511,31 @@ function esc(value: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
 }
+
+export function generateActivityGraphSVG(state: AppState): string {
+  const colors = getTheme(state.statsTheme)
+  const username = state.profile.username || 'user'
+
+  return card(680, 200, colors, `
+    ${title('Activity Graph', 26, 38, colors)}
+    ${subtitle(username, 26, 60, colors)}
+    <text x="26" y="100" fill="${colors.text}" font-size="16" font-family="Arial, sans-serif">📊 Activity visualization</text>
+    <text x="26" y="130" fill="${colors.muted}" font-size="12" font-family="Arial, sans-serif">100% local - no external data required</text>
+    <rect x="26" y="150" width="200" height="20" rx="10" fill="${colors.accent}" />
+    <text x="236" y="165" fill="${colors.text}" font-size="12" font-family="Arial, sans-serif">Activity bars placeholder</text>
+  `)
+}
+
+export function generateTrophiesSVG(state: AppState): string {
+  const colors = getTheme(state.statsTheme)
+  const username = state.profile.username || 'user'
+
+  return card(680, 150, colors, `
+    ${title('🏆 Trophies', 26, 38, colors)}
+    ${subtitle(username, 26, 60, colors)}
+    <text x="26" y="90" fill="${colors.text}" font-size="14" font-family="Arial, sans-serif">⭐ First PR</text>
+    <text x="26" y="110" fill="${colors.text}" font-size="14" font-family="Arial, sans-serif">🔥 Streak Master</text>
+    <text x="26" y="130" fill="${colors.text}" font-size="14" font-family="Arial, sans-serif">💯 100 Contributions</text>
+    <text x="300" y="130" fill="${colors.muted}" font-size="12" font-family="Arial, sans-serif">Local trophy placeholders</text>
+  `)
+}
