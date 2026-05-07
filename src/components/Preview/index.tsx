@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import type { AppState } from '../../types'
 import { generateTypingSVG } from '../../generators/typing-svg'
 import { generateGithubStatsCard, generateGithubStreakCard, generateTopLangsCard, generateActivityGraphSVG, generateTrophiesSVG, svgToDataURI } from '../../generators/github-stats'
-import { generateSnakePreviewSVG } from '../../generators/snake-game'
 import { getFontById } from '../../data/fonts'
 import { t } from '../../data/i18n'
 
