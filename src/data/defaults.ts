@@ -46,7 +46,7 @@ export const DEFAULT_STATE: AppState = {
     color: '58a6ff',
     speed: 40,
     pause: 900,
-    font: 'system',
+    font: 'system-mono',
     fontSize: 22,
     width: 500,
     height: 60,
