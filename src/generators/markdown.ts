@@ -76,7 +76,7 @@ function buildSection(
       if (waveSvg) md += waveSvg + '\n\n'
       md += `# ${profile.displayName}\n`
       md += `### ${getFocusLabel(profile.focus, lang)}\n\n`
-      if (profile.bio) md += `> *${profile.bio}*\n\n`
+      if (profile.bio) md += ` *${profile.bio}*\n\n`
       if (profile.location) md += `📍 ${profile.location}\n\n`
       if (profile.openToWork) {
         md += `<img src="${buildBadgeUrl({ label: 'Open to work', message: 'yes', labelColor: '238636', messageColor: '2ea043', style: 'flat-square' })}" alt="Open to work">\n\n`
