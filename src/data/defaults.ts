@@ -112,7 +112,7 @@ export const TEMPLATES: Template[] = [
     config: {
       profile: { ...DEFAULT_STATE.profile, focus: 'backend', displayName: 'Backend Developer' },
       typing: { ...DEFAULT_STATE.typing, texts: ['Backend Developer 🚀', 'APIs & Microservices', 'Clean Code Enthusiast', '', '', '', '', '', '', ''] },
-      icons: { ...DEFAULT_STATE.icons, activeCategories: ['backend', 'database', 'devops'], selected: ['nodejs', 'python', 'postgresql', 'docker', 'redis'] },
+      icons: { ...DEFAULT_STATE.icons, activeCategories: ['backend', 'database', 'devops'], selected: ['nodejs-dark', 'python-dark', 'postgresql-dark', 'docker', 'redis-dark'] },
     },
   },
   {
@@ -125,7 +125,7 @@ export const TEMPLATES: Template[] = [
     config: {
       profile: { ...DEFAULT_STATE.profile, focus: 'frontend', displayName: 'Frontend Developer' },
       typing: { ...DEFAULT_STATE.typing, texts: ['Frontend Developer 🎨', 'UI/UX Enthusiast', 'Pixel Perfect 💅', '', '', '', '', '', '', ''] },
-      icons: { ...DEFAULT_STATE.icons, activeCategories: ['frontend', 'tools'], selected: ['react', 'ts', 'tailwind', 'vite', 'figma'] },
+      icons: { ...DEFAULT_STATE.icons, activeCategories: ['frontend', 'tools'], selected: ['react-dark', 'typescript', 'tailwindcss-dark', 'vite-dark', 'figma-dark'] },
     },
   },
   {
@@ -138,7 +138,7 @@ export const TEMPLATES: Template[] = [
     config: {
       profile: { ...DEFAULT_STATE.profile, focus: 'fullstack', displayName: 'Full Stack Developer' },
       typing: { ...DEFAULT_STATE.typing, texts: ['Full Stack Developer ⚡', 'Backend & Frontend', 'Building complete products', '', '', '', '', '', '', ''] },
-      icons: { ...DEFAULT_STATE.icons, activeCategories: ['backend', 'frontend', 'database'], selected: ['react', 'nodejs', 'ts', 'postgresql', 'docker'] },
+      icons: { ...DEFAULT_STATE.icons, activeCategories: ['backend', 'frontend', 'database'], selected: ['react-dark', 'nodejs-dark', 'typescript', 'postgresql-dark', 'docker'] },
     },
   },
   {
@@ -151,7 +151,7 @@ export const TEMPLATES: Template[] = [
     config: {
       profile: { ...DEFAULT_STATE.profile, focus: 'devops', displayName: 'DevOps Engineer' },
       typing: { ...DEFAULT_STATE.typing, texts: ['DevOps Engineer ⚙️', 'Infrastructure as Code', 'Reliability & Automation', '', '', '', '', '', '', ''] },
-      icons: { ...DEFAULT_STATE.icons, activeCategories: ['devops', 'cloud', 'tools'], selected: ['docker', 'kubernetes', 'aws', 'linux', 'githubactions'] },
+      icons: { ...DEFAULT_STATE.icons, activeCategories: ['devops', 'cloud', 'tools'], selected: ['docker', 'kubernetes', 'aws-dark', 'linux-dark', 'githubactions-dark'] },
     },
   },
   {
@@ -164,7 +164,7 @@ export const TEMPLATES: Template[] = [
     config: {
       profile: { ...DEFAULT_STATE.profile, focus: 'mobile', displayName: 'Mobile Developer' },
       typing: { ...DEFAULT_STATE.typing, texts: ['Mobile Developer 📱', 'iOS & Android', 'Flutter & Kotlin', '', '', '', '', '', '', ''] },
-      icons: { ...DEFAULT_STATE.icons, activeCategories: ['mobile', 'tools'], selected: ['flutter', 'kotlin', 'swift', 'androidstudio', 'git'] },
+      icons: { ...DEFAULT_STATE.icons, activeCategories: ['mobile', 'tools'], selected: ['flutter-dark', 'kotlin-dark', 'swift', 'androidstudio-dark', 'git'] },
     },
   },
   {
@@ -177,7 +177,7 @@ export const TEMPLATES: Template[] = [
     config: {
       profile: { ...DEFAULT_STATE.profile, focus: 'student', displayName: 'Dev em Construção 🎓', openToWork: true },
       typing: { ...DEFAULT_STATE.typing, texts: ['Estudante de Programação 🎓', 'Sempre aprendendo algo novo', 'Open to opportunities!', '', '', '', '', '', '', ''] },
-      icons: { ...DEFAULT_STATE.icons, activeCategories: ['backend', 'frontend'], selected: ['python', 'js', 'html', 'css', 'git'] },
+      icons: { ...DEFAULT_STATE.icons, activeCategories: ['backend', 'frontend'], selected: ['python-dark', 'javascript', 'html', 'css', 'git'] },
     },
   },
 ]
