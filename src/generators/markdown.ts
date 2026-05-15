@@ -14,7 +14,7 @@ const PUBLIC_BASE_URL = 'https://readmebuilderv.vercel.app'
 const ASSET_NOTE = `<!-- 
   Icones servidos pelo README Builder:
   https://readmebuilderv.vercel.app/assets/icons/
-  Typing SVG e badges sociais servidos por:
+  Typing SVG, badges e cards servidos por:
   https://readmebuilderv.vercel.app/api/
 -->`
 
@@ -118,11 +118,11 @@ function buildSection(
       const ghUser = user
       const theme = statsTheme || 'dark'
       if (plugins['stats']?.enabled)
-        md += `<img src="https://github-readme-stats.vercel.app/api?username=${ghUser}&show_icons=true&theme=${theme}&hide_border=true" alt="GitHub Stats" />\n`
+        md += `<img src="${PUBLIC_BASE_URL}/api/github-stats.svg?username=${ghUser}&theme=${theme}" alt="GitHub Stats" />\n`
       if (plugins['streak']?.enabled)
-        md += `<img src="https://github-readme-streak-stats.herokuapp.com/?user=${ghUser}&theme=${theme}&hide_border=true" alt="GitHub Streak" />\n`
+        md += `<img src="${PUBLIC_BASE_URL}/api/github-streak.svg?user=${ghUser}&theme=${theme}" alt="GitHub Streak" />\n`
       if (plugins['langs']?.enabled)
-        md += `<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=${ghUser}&layout=compact&theme=${theme}&hide_border=true" alt="Top Languages" />\n`
+        md += `<img src="${PUBLIC_BASE_URL}/api/top-langs.svg?username=${ghUser}&theme=${theme}" alt="Top Languages" />\n`
       md += `\n</div>`
       return md
     }
