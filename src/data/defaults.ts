@@ -55,7 +55,7 @@ export const DEFAULT_STATE: AppState = {
   },
 
   icons: {
-    selected: ['python-dark'],
+    selected: ['python-dark', 'javascript', 'c', 'aws-dark'],
     perRow: 12,
     align: 'center',
     search: '',
