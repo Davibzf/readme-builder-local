@@ -1,21 +1,27 @@
-async function fetchSvg(url) {
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`Fetch failed: ${res.status}`)
-  return res.text()
+const { buildGithubStreakSvg } = require('./github-card-utils')
+
+function parseQueryValue(value, fallback) {
+  if (value == null) return fallback
+  const parsed = Number(String(value).trim())
+  return Number.isFinite(parsed) ? String(parsed) : fallback
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   const query = req.query || {}
-  const user = String(query.user || 'seu-username').trim()
-  const theme = String(query.theme || 'dark').trim()
-  const url = `https://github-readme-streak-stats.herokuapp.com/?user=${encodeURIComponent(user)}&theme=${encodeURIComponent(theme)}&hide_border=true`
+  const params = {
+    username: String(query.user || 'seu-username').trim(),
+    currentStreak: parseQueryValue(query.currentStreak, '0'),
+    longestStreak: parseQueryValue(query.longestStreak, '0'),
+    totalContribs: parseQueryValue(query.totalContribs, '0'),
+    theme: String(query.theme || 'dark').trim(),
+  }
 
   try {
-    const svg = await fetchSvg(url)
+    const svg = buildGithubStreakSvg(params)
     res.setHeader('Content-Type', 'image/svg+xml; charset=utf-8')
     res.setHeader('Cache-Control', 'public, max-age=86400')
     res.status(200).send(svg)
   } catch (error) {
-    res.status(502).send(`Error generating GitHub streak SVG: ${error.message}`)
+    res.status(500).send(`Error generating GitHub streak SVG: ${error.message}`)
   }
 }
