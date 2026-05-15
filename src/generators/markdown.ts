@@ -316,6 +316,15 @@ function getTopLanguagesForParams(state: AppState): Array<{ label: string; value
     .slice(0, 5)
 }
 
+function field(fields: Record<string, string>, key: string, fallback: string): string {
+  const value = fields[key]?.trim()
+  return value || fallback
+}
+
+function sumProjects(projects: PinnedProject[], key: 'stars' | 'forks'): number {
+  return projects.filter(p => p.enabled).reduce((sum, project) => sum + (Number(project[key]) || 0), 0)
+}
+
 function getSocialUrl(key: string, val: string): string {
   switch(key) {
     case 'linkedin': return `https://linkedin.com/in/${val}`
