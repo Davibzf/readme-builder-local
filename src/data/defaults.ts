@@ -18,7 +18,7 @@ export const PLUGIN_IDS: PluginId[] = [
 function defaultPlugins(): AppState['plugins'] {
   const result = {} as AppState['plugins']
   for (const id of PLUGIN_IDS) {
-    result[id] = { id, enabled: id === 'stats' || id === 'snake', fields: {} }
+    result[id] = { id, enabled: id === 'stats' || id === 'trophy', fields: {} }
   }
   return result
 }
