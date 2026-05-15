@@ -18,7 +18,7 @@ export const PLUGIN_IDS: PluginId[] = [
 function defaultPlugins(): AppState['plugins'] {
   const result = {} as AppState['plugins']
   for (const id of PLUGIN_IDS) {
-    result[id] = { id, enabled: id === 'stats' || id === 'trophy', fields: {} }
+    result[id] = { id, enabled: id === 'stats' || id === 'trophypython-dark', fields: {} }
   }
   return result
 }
@@ -55,7 +55,7 @@ export const DEFAULT_STATE: AppState = {
   },
 
   icons: {
-    selected: [],
+    selected: ['python-dark'],
     perRow: 12,
     align: 'center',
     search: '',
