@@ -29,7 +29,9 @@ export function generateMarkdown(state: AppState): string {
 
   let typingMd = ''
   if (lines.length) {
-    typingMd = `<img src="${buildTypingSvgUrl({ ...typingConfig, texts: lines }, font.stack)}" alt="Typing SVG" />`
+    typingMd = `<a href="https://github.com/Davibzf/Readme-Builder">
+  <img src="${buildTypingSvgUrl({ ...typingConfig, texts: lines }, font.stack)}" alt="Typing SVG" />
+</a>`
   }
 
   // Icons markdown: public hosted SVG URLs
